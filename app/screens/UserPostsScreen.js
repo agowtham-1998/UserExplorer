@@ -3,10 +3,9 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import styles from '../theme/styles';
 
-
 const UserPostsScreen = inject('store')(observer(({ store, route }) => {
   const { userId } = route.params;
-  const { postStore } = store; // Access postStore from the injected store
+  const { postStore } = store;
 
   useEffect(() => {
     postStore.reset();
@@ -22,15 +21,15 @@ const UserPostsScreen = inject('store')(observer(({ store, route }) => {
   return (
     <View style={styles.container}>
       {postStore.isLoading && postStore.posts.length === 0 ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0000ff" testID="loading-indicator" />
       ) : (
         <FlatList
           data={postStore.posts}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.body}>{item.body}</Text>
+              <Text testID={`post-title-${item.id}`} style={styles.heading}>{item.title}</Text>
+              <Text testID={`post-body-${item.id}`}style={styles.text}>{item.body}</Text>
             </View>
           )}
           onEndReached={fetchMorePosts}
@@ -41,6 +40,5 @@ const UserPostsScreen = inject('store')(observer(({ store, route }) => {
     </View>
   );
 }));
-
 
 export default UserPostsScreen;

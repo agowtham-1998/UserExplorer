@@ -18,20 +18,29 @@ const UserStore = types
     users: types.array(UserModel),
     page: types.number,
     isLoading: types.boolean,
+    errorMessage: types.optional(types.string, ""), // Added error message
   })
   .actions(self => ({
     fetchUsers: flow(function* () {
       self.isLoading = true;
+      self.errorMessage = ""; // Reset error message
       try {
         const response = yield axios.get(`https://dummyjson.com/users`);
         self.users = self.users.concat(response.data.users);
         self.page += 1;
       } catch (error) {
+        self.errorMessage = "Failed to fetch users"; // Set error message
         console.error("Failed to fetch users", error);
       } finally {
         self.isLoading = false;
       }
     }),
+    reset: () => {
+      self.users = [];
+      self.page = 1;
+      self.isLoading = false;
+      self.errorMessage = ""; // Reset error message
+    },
   }));
 
 const PostModel = types.model({
@@ -45,15 +54,18 @@ const PostStore = types
     posts: types.array(PostModel),
     page: types.number,
     isLoading: types.boolean,
+    errorMessage: types.optional(types.string, ""), // Added error message
   })
   .actions(self => ({
     fetchPosts: flow(function* (userId) {
       self.isLoading = true;
+      self.errorMessage = ""; // Reset error message
       try {
         const response = yield axios.get(`https://dummyjson.com/users/${userId}/posts`);
         self.posts = self.posts.concat(response.data.posts);
         self.page += 1;
       } catch (error) {
+        self.errorMessage = "Failed to fetch posts"; // Set error message
         console.error("Failed to fetch posts", error);
       } finally {
         self.isLoading = false;
@@ -62,6 +74,8 @@ const PostStore = types
     reset: () => {
       self.posts = [];
       self.page = 1;
+      self.isLoading = false;
+      self.errorMessage = ""; // Reset error message
     },
   }));
 
@@ -75,11 +89,13 @@ const store = RootStore.create({
     users: [],
     page: 1,
     isLoading: false,
+    errorMessage: "", // Initialize error message
   },
   postStore: {
     posts: [],
     page: 1,
     isLoading: false,
+    errorMessage: "", // Initialize error message
   },
 });
 

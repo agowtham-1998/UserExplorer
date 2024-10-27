@@ -19,29 +19,27 @@ const UserListScreen = inject('store')(observer(({ store, navigation }) => {
   return (
     <View style={styles.container}>
       {userStore.isLoading && userStore.users.length === 0 ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0000ff" testID="loading-indicator" />
       ) : (
         <FlatList
           data={userStore.users}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
-            <TouchableOpacity 
+            <TouchableOpacity   testID={`user-card-${item.id}`}
               style={styles.card} 
               onPress={() => navigation.navigate('Posts', { userId: item.id })}>
-              <Text style={styles.name}>{`${item.firstName} ${item.lastName}`}</Text>
-              <Text style={styles.detail}>{item.company.name}</Text>
-              <Text style={styles.detail}>{item.email}</Text>
+              <Text style={styles.heading}>{`${item.firstName} ${item.lastName}`}</Text>
+              <Text style={styles.text}>{item.company.name}</Text>
+              <Text style={styles.text}>{item.email}</Text>
             </TouchableOpacity>
           )}
           onEndReached={fetchMoreUsers}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={userStore.isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : null}
+          ListFooterComponent={userStore.isLoading ? <ActivityIndicator testID="loading-indicator"  size="small" color="#0000ff" /> : null}
         />
       )}
     </View>
   );
 }));
-
-
 
 export default UserListScreen;

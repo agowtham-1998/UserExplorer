@@ -1,56 +1,36 @@
-// we always make sure 'react-native' gets included first
-import * as ReactNative from "react-native"
-import mockFile from "./mockFile"
+// Always ensure 'react-native' gets included first
+import * as ReactNative from "react-native";
+import mockFile from "./mockFile";
 
-// libraries to mock
+// Mocking libraries
 jest.doMock("react-native", () => {
   // Extend ReactNative
   return Object.setPrototypeOf(
     {
       Image: {
         ...ReactNative.Image,
-        resolveAssetSource: jest.fn((_source) => mockFile), // eslint-disable-line @typescript-eslint/no-unused-vars
+        resolveAssetSource: jest.fn((_source) => mockFile), // Mock image resolution
         getSize: jest.fn(
           (
-            uri: string, // eslint-disable-line @typescript-eslint/no-unused-vars
+            uri: string, // Image URI
             success: (width: number, height: number) => void,
-            failure?: (_error: any) => void, // eslint-disable-line @typescript-eslint/no-unused-vars
-          ) => success(100, 100),
+            failure?: (_error: any) => void // Optional failure callback
+          ) => success(100, 100) // Mock fixed image size
         ),
       },
     },
-    ReactNative,
-  )
-})
+    ReactNative
+  );
+});
 
-jest.mock('i18next', () => ({
-  currentLocale: "en",
-  t: (key: string, params: Record<string, string>) => {
-     return `${key} ${JSON.stringify(params)}`
-  },
-  translate: (key: string, params: Record<string, string>) => {
-    return `${key} ${JSON.stringify(params)}`
-  },
-}));
-
+// Mock Expo Localization
 jest.mock("expo-localization", () => ({
   ...jest.requireActual("expo-localization"),
-  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
-}))
+  getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }], // Fixed locale
+}));
 
-jest.mock("../app/i18n/i18n.ts", () => ({
-  i18n: {
-    isInitialized: true,
-    language: "en",
-    t: (key: string, params: Record<string, string>) => {
-      return `${key} ${JSON.stringify(params)}`
-    },
-    numberToCurrency: jest.fn(),
-  },
-}))
-
-declare const tron // eslint-disable-line @typescript-eslint/no-unused-vars
+declare const tron; // Global Tron declaration for debugging
 
 declare global {
-  let __TEST__: boolean
+  let __TEST__: boolean; // Global test flag
 }

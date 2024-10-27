@@ -162,3 +162,83 @@ Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup)
 - [2018 aka Bowser](https://github.com/infinitered/ignite-bowser)
 - [2017 aka Andross](https://github.com/infinitered/ignite-andross)
 - [2016 aka Ignite 1.0](https://github.com/infinitered/ignite-ir-boilerplate-2016)
+
+
+# User Explorer
+
+Project Overview
+
+User Explorer is a mobile application developed using React Native with Expo. It allows users to view a list of users fetched from the DummyJson API and explore each user's posts with infinite scrolling functionality. The app utilizes MobX-State-Tree for state management and React Navigation for seamless navigation between screens.
+
+# Table of Contents
+
+Frontend:
+React Native
+Expo
+Ignite CLI
+MobX-State-Tree
+Axios for data fetching
+React Navigation for navigation
+
+# Features
+
+User List Screen:
+
+Displays a list of users fetched from the DummyJson API.
+Shows user details such as name, email, and company.
+Implements infinite scrolling to load more users.
+Includes a loading indicator during data fetching.
+
+User Posts Screen:
+
+Navigates to a detail view of the user's posts upon selection.
+Fetches posts from the DummyJson API.
+Displays post titles and bodies.
+Implements infinite scrolling for loading more posts.
+Includes a loading indicator during data fetching.
+
+# Installation
+
+To set up the project locally, follow these steps:
+Clone the repository:
+
+git clone https://github.com/agowtham-1998/UserExplorer.git
+
+# Navigate into the project directory:
+
+cd user-explorer
+Install dependencies:
+
+npm install
+Start the development server:
+
+npm start
+Open the app in Expo Go on your device or simulator.
+
+# Usage
+
+Once the app is running, you can:
+Scroll through the list of users.
+Click on a user to navigate to their posts.
+Scroll down to load more users or posts as needed.
+
+# Testing
+
+To run the tests for this application, you can use the following command:
+
+npm test
+
+The application uses Jest for unit testing, ensuring that all components function as expected.
+
+# Build
+
+To generate an APK for testing on Android devices, run the following command:
+Generete Expo Apk File :
+eas build -p android --profile preview
+
+# Fork the repository
+
+Create a new branch (git checkout -b feature/YourFeature).
+Make your changes and commit them (git commit -m 'Add some feature').
+Push to the branch (git push origin feature/YourFeature).
+Create a new Pull Request.

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
 import { Provider } from 'mobx-react';
-import UserPostsScreen from '../app/screens/UserPostsScreen'; 
+import UserPostsScreen from '../app/screens/UserPostsScreen';
 import store from '../app/models/RootStore';
 
 jest.mock('axios', () => ({
@@ -22,7 +22,7 @@ jest.mock('axios', () => ({
 
 describe('UserPostsScreen', () => {
   beforeEach(() => {
-    store.postStore.reset(); // Reset the post store before each test
+    store.postStore.reset();
   });
 
   it('renders loading indicator initially', () => {

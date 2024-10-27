@@ -8,14 +8,16 @@ const UserListScreen = inject('store')(observer(({ store, navigation }) => {
 
   useEffect(() => {
     userStore.fetchUsers();
-  }, []);
+  }, [userStore]);
 
+  // Fetch more users when the end of the list is reached
   const fetchMoreUsers = () => {
     if (!userStore.isLoading) {
       userStore.fetchUsers();
     }
   };
 
+  // Render loading indicator or user list
   return (
     <View style={styles.container}>
       {userStore.isLoading && userStore.users.length === 0 ? (
@@ -25,9 +27,11 @@ const UserListScreen = inject('store')(observer(({ store, navigation }) => {
           data={userStore.users}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
-            <TouchableOpacity   testID={`user-card-${item.id}`}
+            <TouchableOpacity 
               style={styles.card} 
-              onPress={() => navigation.navigate('Posts', { userId: item.id })}>
+              onPress={() => navigation.navigate('Posts', { userId: item.id })}
+              testID={`user-${item.id}`}
+            >
               <Text style={styles.heading}>{`${item.firstName} ${item.lastName}`}</Text>
               <Text style={styles.text}>{item.company.name}</Text>
               <Text style={styles.text}>{item.email}</Text>
@@ -35,7 +39,7 @@ const UserListScreen = inject('store')(observer(({ store, navigation }) => {
           )}
           onEndReached={fetchMoreUsers}
           onEndReachedThreshold={0.5}
-          ListFooterComponent={userStore.isLoading ? <ActivityIndicator testID="loading-indicator"  size="small" color="#0000ff" /> : null}
+          ListFooterComponent={userStore.isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : null}
         />
       )}
     </View>

@@ -10,7 +10,7 @@ const UserPostsScreen = inject('store')(observer(({ store, route }) => {
   useEffect(() => {
     postStore.reset();
     postStore.fetchPosts(userId);
-  }, [userId]);
+  }, [userId, postStore]);
 
   const fetchMorePosts = () => {
     if (!postStore.isLoading) {
@@ -28,8 +28,8 @@ const UserPostsScreen = inject('store')(observer(({ store, route }) => {
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Text testID={`post-title-${item.id}`} style={styles.heading}>{item.title}</Text>
-              <Text testID={`post-body-${item.id}`}style={styles.text}>{item.body}</Text>
+              <Text style={styles.heading}>{item.title}</Text>
+              <Text style={styles.text}>{item.body}</Text>
             </View>
           )}
           onEndReached={fetchMorePosts}

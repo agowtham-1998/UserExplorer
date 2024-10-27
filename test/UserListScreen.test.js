@@ -17,7 +17,7 @@ jest.mock('axios', () => ({
 
 describe('UserListScreen', () => {
   beforeEach(() => {
-    store.userStore.reset(); // Reset the user store before each test
+    store.userStore.reset();
   });
 
   it('renders loading indicator initially', async () => {
@@ -27,10 +27,8 @@ describe('UserListScreen', () => {
       </Provider>
     );
 
-    // Check for loading indicator
     expect(getByTestId('loading-indicator')).toBeTruthy();
 
-    // Wait for user data to be loaded
     await waitFor(() => expect(store.userStore.users.length).toBeGreaterThan(0));
   });
 

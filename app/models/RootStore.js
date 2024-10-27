@@ -18,28 +18,28 @@ const UserStore = types
     users: types.array(UserModel),
     page: types.number,
     isLoading: types.boolean,
-    errorMessage: types.optional(types.string, ""), // Added error message
+    errorMessage: types.optional(types.string, ""),
   })
   .actions(self => ({
     fetchUsers: flow(function* () {
       self.isLoading = true;
-      self.errorMessage = ""; // Reset error message
+      self.errorMessage = "";
       try {
         const response = yield axios.get(`https://dummyjson.com/users`);
         self.users = self.users.concat(response.data.users);
         self.page += 1;
       } catch (error) {
-        self.errorMessage = "Failed to fetch users"; // Set error message
+        self.errorMessage = "Failed to fetch users";
         console.error("Failed to fetch users", error);
       } finally {
         self.isLoading = false;
       }
     }),
     reset: () => {
-      self.users = [];
+      self.users.clear(); // Clear users before resetting
       self.page = 1;
       self.isLoading = false;
-      self.errorMessage = ""; // Reset error message
+      self.errorMessage = "";
     },
   }));
 
@@ -54,28 +54,28 @@ const PostStore = types
     posts: types.array(PostModel),
     page: types.number,
     isLoading: types.boolean,
-    errorMessage: types.optional(types.string, ""), // Added error message
+    errorMessage: types.optional(types.string, ""),
   })
   .actions(self => ({
     fetchPosts: flow(function* (userId) {
       self.isLoading = true;
-      self.errorMessage = ""; // Reset error message
+      self.errorMessage = "";
       try {
         const response = yield axios.get(`https://dummyjson.com/users/${userId}/posts`);
         self.posts = self.posts.concat(response.data.posts);
         self.page += 1;
       } catch (error) {
-        self.errorMessage = "Failed to fetch posts"; // Set error message
+        self.errorMessage = "Failed to fetch posts";
         console.error("Failed to fetch posts", error);
       } finally {
         self.isLoading = false;
       }
     }),
     reset: () => {
-      self.posts = [];
+      self.posts.clear(); // Clear posts before resetting
       self.page = 1;
       self.isLoading = false;
-      self.errorMessage = ""; // Reset error message
+      self.errorMessage = "";
     },
   }));
 
@@ -89,13 +89,11 @@ const store = RootStore.create({
     users: [],
     page: 1,
     isLoading: false,
-    errorMessage: "", // Initialize error message
   },
   postStore: {
     posts: [],
     page: 1,
     isLoading: false,
-    errorMessage: "", // Initialize error message
   },
 });
 

@@ -26,7 +26,7 @@
       "extends": "production",
       "distribution": "internal",
       "ios": { "simulator": true },
-      "android": { "buildType": "apk" ,  "jsEngine": "hermes"}
+      "android": { "buildType": "apk" }
     },
     "preview:device": {
       "extends": "preview",
